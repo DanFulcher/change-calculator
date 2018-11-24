@@ -3,7 +3,9 @@
     <form name="change-calc" @submit.prevent="calcChange(amount)">
       <input v-model="amount" placeholder="Amount"/>
       <button type="submit">Calculate</button>
-      {{ this.output }}
+      <p :key="index" v-for="(money, index) in this.output">
+        {{ money }}
+      </p>
     </form>
   </div>
 </template>
@@ -40,7 +42,12 @@ export default {
             if (amount >= this.coins[0])
             {
                 let left = (amount - this.coins[0]);
-                this.output.push(this.coins[0]);
+                this.output.push(new Intl.NumberFormat('en-EN', {
+                    style: 'currency',
+                    currency: 'GBP',
+                    minimumFractionDigits:2,
+                    maximumFractionDigits:2
+                }).format(this.coins[0] / 100));
                 return [this.coins[0]].concat( this.calcChange(left));
             }
             // If given amount is NOT larger the largest coin, it removes the largest coin from the array
