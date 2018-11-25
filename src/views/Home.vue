@@ -34,6 +34,9 @@ export default {
       }
   },
   watch: {
+    // watches for when the input field is being typed in.
+    // when it is, it clears the output array and resets the coins array.
+    // it also sends the input value to the handleData function so it can be formatted correctly.
     input: function () {
       this.output = [],
       this.coins = initCoins(),
@@ -42,19 +45,23 @@ export default {
   },
   methods: {
       handleData (amount) {
-          // if(amount.startsWith('£')) {
-          //     amount.replace('£', '')
-          // }
-          // if(amount.endsWith('p')) {
-          //     amount.replace('p', '')
-          // }
-          if(amount.includes('.')) {
-              this.pennies = (amount*100);
+          if(amount.startsWith('£')) {
+              let newVal = parseFloat(amount.replace(/[^0-9-.]/g, ''));
+              this.pennies = newVal*100;
           } else {
-              this.pennies = amount;
+              let newVal = parseFloat(amount.replace(/[^0-9-.]/g, ''));
+              this.pennies = newVal;
+              if(newVal % 1 !== 0) {
+                  this.pennies = (newVal*100);
+              } else {
+                  this.pennies = newVal;
+              }
           }
       },
+
       calcChange (amount) {
+
+
           if (amount === 0)
           {
               return [];
