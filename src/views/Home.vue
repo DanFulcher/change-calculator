@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <form name="change-calc" @submit.prevent="handleData(input)">
+    <form name="change-calc" @submit.prevent="calcChange(pennies)">
       <input v-model="input" placeholder="Amount"/>
       <button type="submit">Calculate</button>
       <p :key="index" v-for="(money, index) in this.output">
@@ -31,12 +31,29 @@ export default {
       }
   },
   watch: {
-    pennies: function () {
-        this.calcChange(this.pennies);
+    input: function () {
+      this.output = []
+      this.coins = [
+          200,
+          100,
+          50,
+          20,
+          10,
+          5,
+          2,
+          1
+      ],
+      this.handleData(this.input);
     }
   },
   methods: {
       handleData (amount) {
+          // if(amount.startsWith('£')) {
+          //     amount.replace('£', '')
+          // }
+          // if(amount.endsWith('p')) {
+          //     amount.replace('p', '')
+          // }
           if(amount.includes('.')) {
               this.pennies = (amount*100);
           } else {
