@@ -11,38 +11,32 @@
 </template>
 
 <script>
+function initCoins () {
+    return [
+        200,
+        100,
+        50,
+        20,
+        10,
+        5,
+        2,
+        1
+    ]
+}
 export default {
   name: 'home',
-  data: function () {
+  data () {
       return {
           input: '',
           pennies:'',
-          coins: [
-              200,
-              100,
-              50,
-              20,
-              10,
-              5,
-              2,
-              1
-          ],
+          coins: initCoins(),
           output: []
       }
   },
   watch: {
     input: function () {
-      this.output = []
-      this.coins = [
-          200,
-          100,
-          50,
-          20,
-          10,
-          5,
-          2,
-          1
-      ],
+      this.output = [],
+      this.coins = initCoins(),
       this.handleData(this.input);
     }
   },
